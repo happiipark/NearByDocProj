@@ -172,6 +172,20 @@ public class ReservationDaoImpl implements ReservationDao{
 		return sqlSession.selectList("mapper.reservation.resListByPidnum", param);
 	}
 
+	@Override
+	public void updateDoccommentById(Map<String, Object> param) throws Exception {
+		sqlSession.update("mapper.reservation.updateDoccommentById",param);
+		sqlSession.commit();
+	}
 	
+	@Override
+	public String selectCurTime() throws Exception {
+		return sqlSession.selectOne("mapper.reservation.selectCurTime");
+	}
+	
+	@Override
+	public String selectToday() throws Exception {
+		return sqlSession.selectOne("mapper.reservation.selectToday");
+	}
 
 }

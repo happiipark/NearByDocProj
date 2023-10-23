@@ -67,7 +67,7 @@ body {
 }
 
 h1 {
-	width: 202px;
+	width: 270px;
 	height: 50px;
 	margin: 18px auto;
 	color: rgb(25, 25, 112);
@@ -81,6 +81,9 @@ th {
 	font-weight: bold;
 	border-bottom:6px solid #191970;
 	
+}
+td {
+	text-align: center;
 }
 
 table {
@@ -194,7 +197,7 @@ button {
 
 
 	<div id="center">
-		<h1>진료 기록 조회</h1>
+		<h1>예약/진료 내역 조회</h1>
 		<br> <br>
 
 		<form action="mrecordsearch" method="post" id="searchform">
@@ -226,9 +229,8 @@ button {
 				<th>환자명</th>
 				<th>요청사항</th>
 				<th>진료과목</th>
-				<th>진료완료처리</th>
-				<th><a href="javascript:openOpinion('opinion.jsp','popup');"
-					style="text-decoration: none;">담당의소견</a></th>
+				<th>예약/진료상태</th>
+				<th>담당의소견</th>
 			</tr>
 
 			<c:forEach items="${res.resList }" var="reserve">
@@ -238,7 +240,23 @@ button {
 					<td style="background-color:white">${reserve.pname }</td>
 					<td style="background-color:white">${reserve.comment }</td>
 					<td style="background-color:white">${hospitaluser.department }</td>
-					<td style="background-color:white">${reserve.status }</td>
+					<td style="background-color:white"><c:choose>
+							<c:when test="${reserve.status eq '1'}">
+								예약
+							</c:when>
+							<c:when test="${reserve.status eq '2'}">
+								진료완료
+							</c:when>
+							<c:when test="${reserve.status eq '3'}">
+								예약취소
+							</c:when>
+							<c:when test="${reserve.status eq '4'}">
+								방문안함
+							</c:when>
+							<c:otherwise>
+								회원탈퇴
+							</c:otherwise>
+						</c:choose></td>
 					<td style="background-color:white">${reserve.doccomment }</td>
 				</tr>
 			</c:forEach>

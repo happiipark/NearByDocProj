@@ -245,6 +245,7 @@
 		,p.pname as pname
 		,r.comment as comment
 		,r.status as status
+		,r.id as id
 		from reservation r,patient p
 		where r.comnum=#{comnum}
 		and r.pidnum=p.pidnum
@@ -259,6 +260,18 @@
 		select count(*) from reservation
 		where comnum=#{comnum}
 		  and resdate = (select substring(now(),1,10))
+	]]>
+	</select>
+	
+	<select id='selectCurTime' resultType="String" >
+	<![CDATA[
+		SELECT SUBSTRING(NOW(),12,5)
+	]]>
+	</select>
+	
+	<select id='selectToday' resultType="String" >
+	<![CDATA[
+		SELECT SUBSTRING(NOW(),1,10)
 	]]>
 	</select>
 	
@@ -332,4 +345,13 @@
 		where r.comnum=#{comnum} and (r.status=1 or r.status=2) and (r.pidnum=#{pidnum} or (p.ppidnum=#{pidnum} and r.pidnum=p.pidnum))
 	]]>
 	</select>
+	
+	<update id="updateDoccommentById" parameterType="hashmap">
+     <![CDATA[
+     update reservation 
+     set status=2, doccomment=#{doccomment}
+     where id = #{id}
+     ]]>
+     </update>
+	
 </mapper>
